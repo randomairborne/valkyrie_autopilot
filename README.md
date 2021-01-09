@@ -1,2 +1,2 @@
 # valkyrie_autopilot
-A discord.py general purpuose bot
+A discord.py general purpose bot
