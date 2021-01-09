@@ -9,6 +9,8 @@ import subprocess
 import time
 from discord.ext import commands
 
+TOKEN = 'Put token here'
+
 intents = discord.Intents().all()
 valkyriebot = commands.Bot(command_prefix = '&', case_insensitive=True, intents=intents)
 
@@ -21,7 +23,6 @@ with open('helputility.txt', 'r') as file:
 with open('helpmod.txt', 'r') as file:
     helpmod = file.read()
 animetxt.close()
-TOKEN = 'Nzk2NDMxOTU3MzUzMzAwMDE4.X_X1Dw.5lnzyPj3fjFHl4mm_b1Jex1S7JA'
 crystalball = ["Yes","No","Perhaps","Maybe","It Is Certain","Impossible"]
 embedcolor = 0xFD6A02
 
