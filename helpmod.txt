@@ -1,3 +1,0 @@
-**Moderation commands:**
-`clear <int>`: purges that amount of channel history
-
