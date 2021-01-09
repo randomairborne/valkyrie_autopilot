@@ -1,7 +1,0 @@
-**Bot utility commands:**
-`test`: tests bot
-`ping`: Pong!
-`restart`: restarts bot
-`estop`: For use **only** in emergencies. Shuts down the bot.
-`help`: wants you to ask nicely
-`please`: shows this menu
