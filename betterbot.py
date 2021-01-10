@@ -5,8 +5,7 @@ import subprocess
 import time
 
 from discord.ext import commands
-path = "/home/valkyrie_pilot/valkyrie_autopilot/"
-TOKEN = 'Nzk2NDMxOTU3MzUzMzAwMDE4.X_X1Dw.3ggI8qhwyulZpYe1ULE4tyZbEuo'
+path = "token'
 intents = discord.Intents().all()
 valkyriebot = commands.Bot(command_prefix = '&', case_insensitive=True, intents=intents)
 
