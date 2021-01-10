@@ -1,26 +1,25 @@
 import discord
 import random
-import subprocess
-import sys
-import datetime
-import os
 import json
 import subprocess
 import time
+
 from discord.ext import commands
-
-TOKEN = 'Put token here'
-
+path = "/home/valkyrie_pilot/valkyrie_autopilot/"
+TOKEN = 'Token'
 intents = discord.Intents().all()
 valkyriebot = commands.Bot(command_prefix = '&', case_insensitive=True, intents=intents)
 
-animetxt = open("/home/valkyrie_pilot/valkyrie_autopilot/anime.json", "r")
+animetxt = open(path + "anime.json", "r")
 animes = json.loads(animetxt.read())
-with open('helpfun.txt', 'r') as file:
+swearstxt = open(path +'embedtexts/swears.json', "r")
+swears = json.loads(swearstxt.read())
+swearstxt.close()
+with open(path + 'embedtexts/helpfun.txt', 'r') as file:
     helpfun = file.read()
-with open('helputility.txt', 'r') as file:
+with open(path + 'embedtexts/helputility.txt', 'r') as file:
     helputility = file.read()
-with open('helpmod.txt', 'r') as file:
+with open(path + 'embedtexts/helpmod.txt', 'r') as file:
     helpmod = file.read()
 animetxt.close()
 crystalball = ["Yes","No","Perhaps","Maybe","It Is Certain","Impossible"]
@@ -30,6 +29,7 @@ embedcolor = 0xFD6A02
 async def on_ready():
     print('Logged on as valkyrie_autopilot!')
     await valkyriebot.change_presence(activity=discord.Game(name="My prefix is `&`, have fun!"))
+
 
 valkyriebot.remove_command('help')
 
@@ -61,7 +61,21 @@ async def restart(ctx):
     subprocess.run(exit, shell=True)
 
 @valkyriebot.command()
-async def estop():
+async def spam(ctx):
+    await ctx.message.delete()
+    args = ctx.message.content.split(" ")
+    if args[2]:
+        spam = args[1]
+        title = args[2]
+        times = int(args[3])
+        for x in range(0,times):
+            embed = discord.Embed(color=embedcolor)
+            embed.add_field(name=title, value=spam)
+            embed.set_footer(text=f"Request by {ctx.author}")
+            await ctx.send(embed=embed)
+
+@valkyriebot.command()
+async def estop(ctx):
     await ctx.message.delete()
     quit()
 
@@ -96,15 +110,15 @@ async def help(ctx):
 async def please(ctx):
     await ctx.message.delete()
     embed = discord.Embed(color=embedcolor, title="Commands")
-    embed.add_field(name="Fun commands",
+    embed.add_field(name="Fun commands:",
                     value=helpfun,
-                    inline='true')
-    embed.add_field(name="Bot utilities",
+                    inline=True)
+    embed.add_field(name="Bot utilities:",
                     value=helputility,
-                    inline='true')
-    embed.add_field(name="Moderation commands",
+                    inline=True)
+    embed.add_field(name="Moderation commands:",
                     value=helpmod,
-                    inline='true')
+                    inline=True)
     embed.set_footer(text=f"Request by {ctx.author}")
     await ctx.send(embed=embed)
 
@@ -144,5 +158,26 @@ async def anime(ctx):
     await ctx.message.delete()
     send = random.choice(animes)
     await ctx.channel.send(send)
+@valkyriebot.command()
+async def badwords(ctx):
+    await ctx.message.delete()
+    args = ctx.message.content.split(" ")
+    if args[1]:
+        swearsjson = open(path + "embedtexts/swears.json", "w")
+        swears.append(args[1])
+        swearsjson.write(json.dumps(swears))
+        swearsjson.close()
+        embed = discord.Embed(color=embedcolor)
+        embed.add_field(name="Add successful", value="Added " + args[1] + "to banned words list successfully")
+        embed.set_footer(text=f"Request by {ctx.author}")
+        await ctx.send(embed=embed)
+@valkyriebot.event
+async def on_message(message):
+    ctx = message
+    print(f"{ctx.author}:{ctx.content}")
+    if ctx.content in swears:
+        await ctx.delete()
+        await ctx.channel.send("Ay, mate. You're not allowed to say that here >:<")
+        await valkyriebot.process_commands(message)
 
 valkyriebot.run(TOKEN)
