@@ -1,0 +1,5 @@
+`hello`: Hello there, General Kenobi
+`ball <question>`: Magic 8 ball!
+`bruh`: Thats bruh
+`anime`: sends random anime
+`addanime <link>`: Adds an image to the `anime` command
