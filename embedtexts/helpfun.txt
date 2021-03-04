@@ -3,3 +3,7 @@
 `bruh`: Thats bruh
 `anime`: sends random anime
 `addanime <link>`: Adds an image to the `anime` command
+`animespam <int>`: Spams images from the anime command
+`hug <ping>`: Hugs someone
+`huggle <ping>`: Huggles someone
+`cuddle <ping>`: Cuddles someone
