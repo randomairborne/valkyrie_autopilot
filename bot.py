@@ -194,9 +194,13 @@ async def animespam(ctx):
             time.sleep(0.5)
 
 @valkyriebot.command()
-async def hug(ctx, member : discord.Member = None):
-    if member is not None:
-        await ctx.send(f"{member.mention}, {ctx.author.mention} gave you a hug, aww!")
+async def hug(ctx, *, user:str = None):
+    if user is not None:
+        try: 
+            mention = f'<@{int(user)}>'
+        except: 
+            mention = user
+        await ctx.send(f"{mention}, {ctx.author.mention} gave you a hug, aww!")
     await ctx.send("https://media.tenor.com/images/50c2f13c590fdb27c087d6a6736218e0/tenor.gif")
             
 @valkyriebot.command()
